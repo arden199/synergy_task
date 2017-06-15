@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="container-fluid">
+                    <div class="row">
+                        <ul>
+                            <li><div class="col-sm-2 nav-col inscription">Test for me</div></li>
+                            <li><a href="{% url 'user_list' %}"><div class="col-sm-1 nav-col col-sm-push-8 ">Users</div></a></li>
+                            <li><a href="{% url 'courses_list' %}"><div class="col-sm-1 nav-col col-sm-push-8 ">Courses</div></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% block content %}{% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+    <script src="{% static 'courses/js/main.js' %}"></script>
+    </body>
+</html>

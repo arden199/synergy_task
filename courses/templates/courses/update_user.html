@@ -1,0 +1,49 @@
+{% extends 'courses/base.html' %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<div class='div-back'>
+    <a href="{% url 'user_list' %}?{{ request.GET.urlencode }}">
+        <div class='icon-circle-red'>
+            <img class='icon-back' src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDI4NC45MzUgMjg0LjkzNiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjg0LjkzNSAyODQuOTM2OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTExMC40ODgsMTQyLjQ2OEwyMjIuNjk0LDMwLjI2NGMxLjkwMi0xLjkwMywyLjg1NC00LjA5MywyLjg1NC02LjU2N2MwLTIuNDc0LTAuOTUxLTQuNjY0LTIuODU0LTYuNTYzTDIwOC40MTcsMi44NTcgICBDMjA2LjUxMywwLjk1NSwyMDQuMzI0LDAsMjAxLjg1NiwwYy0yLjQ3NSwwLTQuNjY0LDAuOTU1LTYuNTY3LDIuODU3TDYyLjI0LDEzNS45Yy0xLjkwMywxLjkwMy0yLjg1Miw0LjA5My0yLjg1Miw2LjU2NyAgIGMwLDIuNDc1LDAuOTQ5LDQuNjY0LDIuODUyLDYuNTY3bDEzMy4wNDIsMTMzLjA0M2MxLjkwNiwxLjkwNiw0LjA5NywyLjg1Nyw2LjU3MSwyLjg1N2MyLjQ3MSwwLDQuNjYtMC45NTEsNi41NjMtMi44NTcgICBsMTQuMjc3LTE0LjI2N2MxLjkwMi0xLjkwMywyLjg1MS00LjA5NCwyLjg1MS02LjU3YzAtMi40NzItMC45NDgtNC42NjEtMi44NTEtNi41NjRMMTEwLjQ4OCwxNDIuNDY4eiIgZmlsbD0iI0ZGRkZGRiIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+        </div>
+    </a>
+</div>
+<div class="center-col">
+    <span class='form-inscription'><b>UPDATE USER</b></span>
+    <form id='update-form' method="post" action="#">
+        {% csrf_token %}
+        <script>
+            var csrf_token = "{{ csrf_token }}";
+        </script>
+        {% for field in form %}
+            <div class="field-block {% if field.html_name == 'courses_list' %} hidden-field{% endif %}">
+                <label class="label-block">{% if field.field.required %}<span class='required'>*</span>{% endif %}{{ field.label_tag }}</label>
+                <div id='{{ field.html_name }}'>
+                    <div class="round-input {% if field.html_name == 'name' %}readOnly{% endif %}{% if field.errors %}static-error-symbol{% endif %}">
+                        {{ field }}
+                        {% if field.html_name == "courses" %}
+                            <button id='add-course' class='add-course' type='button' onclick="addCourse()"></button>
+                        {% endif %}
+                    </div>
+                    <div class="error">
+                        {{ field.errors }}
+                    </div>
+                </div>
+            </div>
+            {% if field.html_name == "courses" %}
+                <div class='course-container'>
+                    {% for course in courses %}
+                        <div id='course-{{ course.code }}' class="course">
+                            {{ course.name }}
+                            <button class='remove-course' type="button" onclick='removeCourse("{{ course.name }}", "{{ course.code }}")' ></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <div class='button-div'>
+        <button class="submit-button" type="submit">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

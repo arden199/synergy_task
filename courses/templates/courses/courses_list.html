@@ -1,0 +1,19 @@
+{% extends 'courses/base.html' %}
+{% block title %}Users{% endblock %}
+{% block content %}
+    <div class="courseContainer">
+        <div class="table-heading"> <b>COURSES</b> </div>
+        <table class="courseTable">
+            <tr>
+                <th>NAME</th>
+                <th class="last-column">CODE</th>
+            </tr>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td class='last-column'>{{ course.code }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
